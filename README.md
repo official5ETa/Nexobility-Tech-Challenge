@@ -1,6 +1,5 @@
 # Nexobility Tech-Challenge
 
-## Projektbeschreibung
 Dieses Projekt wurde im Rahmen der **Nexobility Tech-Challenge** entwickelt und hat das Ziel, eine zentrale Plattform zur **Erfassung und Nachverfolgung von Diebstählen** bereitzustellen.  
 Hintergrund ist die steigende Anzahl von Diebstählen, insbesondere in Baumärkten und bei Benzindiebstählen, die von organisierten Banden durchgeführt werden.  
 Das System soll die Verwaltung dieser Vorfälle erleichtern und Transparenz über Filialen hinweg schaffen.

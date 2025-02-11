@@ -18,6 +18,11 @@ export class IncidentController {
   ) {
     return await this.incidentService.findAllIncidents(pagination, filter, sort);
   }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<TIncident> {
+    return await this.incidentService.findIncidentById(id);
+  }
   
   @Post()
   async createIncident(@Body() createIncidentDto: CreateIncidentDto): Promise<TIncident> {

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { TIncident } from '../../../models/tincident.schema';
@@ -74,6 +74,20 @@ export class IncidentService {
     ]);
 
     return query.exec();
+  }
+
+  async findIncidentById(id: string): Promise<TIncident> {
+    const incident = await this.incidentModel.findById(id)
+      .populate('address_id')
+      .populate('suspects')
+      .populate('vehicles')
+      .exec();
+
+    if (!incident) {
+      throw new NotFoundException(`Incident with ID ${id} not found`);
+    }
+
+    return incident;
   }
 
   async createIncident(createIncidentDto: CreateIncidentDto): Promise<TIncident> {

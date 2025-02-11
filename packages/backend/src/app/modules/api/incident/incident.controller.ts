@@ -3,7 +3,7 @@ import { IncidentService } from './incident.service';
 import { CreateIncidentDto } from './dto/create-incident.dto';
 import { TIncident } from '../../../models/tincident.schema';
 
-@Controller('incidents')
+@Controller('incident')
 export class IncidentController {
   constructor(private readonly incidentService: IncidentService) {}
 

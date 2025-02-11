@@ -6,6 +6,10 @@ import { CreateIncidentDto } from './dto/create-incident.dto';
 import { TAddress } from '../../../models/taddress.schema';
 import { TSuspect } from '../../../models/tsuspect.schema';
 import { TVehicle } from '../../../models/tvehicle.schema';
+import { FilterDto } from './dto/filter.dto';
+import { PaginationDto } from './dto/pagination.dto';
+import { SortDto } from './dto/sort.dto';
+import { FindAllIncidentsIncident } from './interfaces/find-all-incidents-incident.interface';
 
 @Injectable()
 export class IncidentService {
@@ -15,6 +19,62 @@ export class IncidentService {
     @InjectModel(TSuspect.name) private readonly suspectModel: Model<TSuspect>,
     @InjectModel(TVehicle.name) private readonly vehicleModel: Model<TVehicle>,
   ) {}
+
+  async findAllIncidents(pagination: PaginationDto, filter: FilterDto, sort: SortDto): Promise<FindAllIncidentsIncident[]> {
+    const { page, limit } = pagination;
+    const skip = (page - 1) * limit;
+
+    const query = this.incidentModel.aggregate([
+      {
+        $lookup: {
+          from: 'taddresses',
+          localField: 'address_id',
+          foreignField: '_id',
+          as: 'address',
+        },
+      },
+      {
+        $unwind: '$address',
+      },
+      {
+        $lookup: {
+          from: 'tvehicles',
+          localField: 'vehicles',
+          foreignField: '_id',
+          as: 'vehicles',
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          date: 1,
+          value: 1,
+          location: {
+            street: '$address.street',
+            house_number: '$address.house_number',
+            city: '$address.city',
+            zip_code: '$address.zip_code',
+            country: '$address.country',
+          },
+          licensePlate: { $arrayElemAt: ['$vehicles.licensePlate', 0] },
+        },
+      },
+      {
+        $match: filter,
+      },
+      {
+        $sort: sort,
+      },
+      {
+        $skip: skip,
+      },
+      {
+        $limit: limit,
+      },
+    ]);
+
+    return query.exec();
+  }
 
   async createIncident(createIncidentDto: CreateIncidentDto): Promise<TIncident> {
     let savedAddress = await this.addressModel.findOne(createIncidentDto.address);

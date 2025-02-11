@@ -20,7 +20,7 @@ export class IncidentService {
     @InjectModel(TVehicle.name) private readonly vehicleModel: Model<TVehicle>,
   ) {}
 
-  async findAllIncidents(pagination: PaginationDto, filter: FilterDto, sort: SortDto): Promise<FindAllIncidentsIncident[]> {
+  async findAllIncidents(pagination: PaginationDto, filter: FilterDto = {}, sort: SortDto = {}): Promise<FindAllIncidentsIncident[]> {
     const { page, limit } = pagination;
     const skip = (page - 1) * limit;
 
@@ -63,7 +63,7 @@ export class IncidentService {
         $match: filter,
       },
       {
-        $sort: sort,
+        $sort: sort as Record<string, 1 | -1>,
       },
       {
         $skip: skip,

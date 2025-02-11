@@ -2,7 +2,7 @@ export interface FindAllIncidentsIncident {
   _id: string;
   date: Date;
   value: number;
-  location: {
+  address: {
     street: string;
     house_number: string;
     city: string;

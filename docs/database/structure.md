@@ -4,7 +4,7 @@
 +-----------------------+
 | _id (ObjectId)        |  <-- Primärschlüssel
 | date (Date)           |  <-- Zeitpunkt des Vorfalls
-| location (String)     |  <-- Adresse des Vorfalls
+| address (String)      |  <-- Adresse des Vorfalls
 | value (Number)        |  <-- Warenwert in Euro
 | description (String)  |  <-- Mehrzeilige Beschreibung
 | files (Array)         |  <-- Hashes von Bildern/Dokumenten

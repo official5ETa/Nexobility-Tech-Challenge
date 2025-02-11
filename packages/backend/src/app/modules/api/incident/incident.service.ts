@@ -49,7 +49,7 @@ export class IncidentService {
           _id: 1,
           date: 1,
           value: 1,
-          location: {
+          address: {
             street: '$address.street',
             house_number: '$address.house_number',
             city: '$address.city',

@@ -48,5 +48,10 @@
         }
       }
     }
+  },
+  "dependencies": {
+    "@nestjs/mongoose": "^11.0.1",
+    "dotenv": "^16.4.7",
+    "mongoose": "^8.10.0"
   }
 }
